@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+    <!-- 
+      1.解析HTML结构
+      2.加载外部脚本和样式表文件
+      3.解析并执行脚本代码
+      4.构造HTML DOM模型 //document ready
+      5.加载图片等外部文件
+      6.页面加载完毕     // window load 
+    -->
+    <script>
+      // 1. 原生的JavaScript写法
+      // define
+      document.ready = function (callback) {
+        if (document.readyState !== "loading") {
+          callback();
+        } else {
+          document.addEventListener("DOMContentLoaded", callback);
+        }
+      };
+
+      // 使用示例
+      document.ready(function () {
+        alert("1. ready");
+      });
+
+      // 2. JQuery写法
+      $(document).ready(function () {
+        alert("2. ready");
+      });
+      //或者简写为
+      // $(function () {
+      //   alert("ready");
+      // });
+
+      // window load
+      $(window).on("load", function () {
+        alert("onload");
+      });
+    </script>
+  </body>
+</html>
