@@ -5,7 +5,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-// 示例1
+// 示例1, do not catch error, and it will go to the next catch in the chain
 const example1 = () => {
   Promise.resolve()
     .then(() => {
@@ -20,7 +20,7 @@ const example1 = () => {
     });
 };
 
-// 示例2
+// 示例2, catch error in the end of the promise chain
 const example2 = () => {
   Promise.resolve()
     .then(() => {
@@ -38,7 +38,7 @@ const example2 = () => {
     });
 };
 
-// 示例3
+// 示例3, catch error and continue
 const example3 = () => {
   Promise.resolve()
     .then(() => {
@@ -46,7 +46,7 @@ const example3 = () => {
       throw new Error("Error in Step 1");
     })
     .catch((err) => {
-      console.error("Caught error:", err.message); // 捕获错误并输出错误信息
+      console.error("Caught error:", err.message); // 捕获错误并输出错误信息, 链路中对错误进行了捕获，后面的then函数还是会继续执行。
     })
     .then(() => {
       console.log("Step 2"); // 这一步会被执行
@@ -56,7 +56,7 @@ const example3 = () => {
     });
 };
 
-// 示例4
+// 示例4, return a rejected promise
 const example4 = () => {
   Promise.resolve()
     .then(() => {
@@ -73,7 +73,7 @@ const example4 = () => {
     });
 };
 
-// 示例5
+// 示例5, catch error globally
 const example5 = () => {
   Promise.resolve()
     .then(() => {
