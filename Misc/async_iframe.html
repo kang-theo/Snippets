@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Async Iframe Loading</title>
+<script>
+window.onload = function() {
+  var iframe = document.createElement('iframe');
+  iframe.src = 'https://www.wikipedia.org';
+  iframe.style.width = '100%';
+  iframe.style.height = '500px';
+  iframe.style.border = 'none';
+  document.getElementById('async-iframe-container').appendChild(iframe);
+};
+</script>
+</head>
+<body>
+<div id="async-iframe-container"></div>
+<!-- Other content on the page -->
+</body>
+</html>
