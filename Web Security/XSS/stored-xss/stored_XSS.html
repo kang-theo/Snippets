@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>存储型XSS攻击演示</title>
+</head>
+<body>
+    <h1>评论列表</h1>
+    <div id="comments"></div>
+    <form id="commentForm">
+        <!-- summit XSS script as a comment -->
+        <textarea id="comment" title="comment" rows="4" cols="50"><script>alert("XSS")</script></textarea><br>
+        <input type="submit" value="提交评论">
+    </form>
+
+    <script>
+        document.getElementById("commentForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            let comment = document.getElementById("comment").value;
+            // 使用Fetch API将评论提交到服务器
+            fetch("/comments", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ comment: comment })
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // 提交成功后重新加载评论列表
+                loadComments();
+            })
+            .catch(error => console.error("Error:", error));
+        });
+
+        // 加载评论列表
+        function loadComments() {
+            fetch("/comments")
+            .then(response => response.json())
+            .then(comments => {
+                let commentsDiv = document.getElementById("comments");
+                commentsDiv.innerHTML = "";
+                comments.forEach(comment => {
+                    // 在页面上显示评论内容，这里存在存储型XSS漏洞
+                    let p = document.createElement("p");
+                    p.textContent = comment; // 没有对评论内容进行过滤，存在XSS漏洞
+                    commentsDiv.appendChild(p);
+                });
+            })
+            .catch(error => console.error("Error:", error));
+        }
+
+        // 页面加载时加载评论列表, XSS script in the comment will be executed
+        document.addEventListener("DOMContentLoaded", function() {
+            loadComments();
+        });
+    </script>
+</body>
+</html>

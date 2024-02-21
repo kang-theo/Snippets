@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reflected XSS</title>
+</head>
+<body>
+    <h1>Search Results</h1>
+    <!-- when user access http://example.com/search?keyword=<script>alert('XSS')</script>，an alert will popped out with "XSS" -->
+    <!-- the link can be showed to users through social engineering, emails, malicious websites, etc. -->
+    <p>Results for: <span id="keyword"><?php echo htmlspecialchars($_GET['keyword']); ?></span></p>
+    <script>
+        const keyword = document.getElementById('keyword').textContent;
+        if (keyword.includes('<script>')) {
+            alert('XSS');
+        }
+    </script>
+</body>
+</html>

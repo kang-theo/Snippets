@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Page</title>
+</head>
+<body>
+    <h1>Search Page</h1>
+    <form id="searchForm">
+        <input type="text" title="Search" id="searchInput" name="query">
+        <button type="submit">Search</button>
+    </form>
+    <div id="searchResults"></div>
+
+    <script>
+        // when user press the submit button, the form will be submitted, 
+        // and the search results(which include malicious script ) will be displayed, and executed in the browser.
+        // the script can modify the DOM directly.
+        document.getElementById("searchForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const query = document.getElementById("searchInput").value;
+            displaySearchResults(query);
+        });
+
+        function displaySearchResults(query) {
+            document.getElementById("searchResults").innerHTML = "Search results for: " + query;
+        }
+    </script>
+</body>
+</html>
