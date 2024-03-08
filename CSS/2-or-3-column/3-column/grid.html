@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      .wrap {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 50px auto 50px; /* set the width of Left and Right */
+      }
+      .left .right,
+      .middle {
+        height: 100px;
+      }
+      .left {
+        background: coral;
+      }
+      .right {
+        background: lightblue;
+      }
+      .middle {
+        background: #555;
+        margin: 0 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="left">Left</div>
+      <div class="middle">Middle</div>
+      <div class="right">Right</div>
+    </div>
+  </body>
+</html>

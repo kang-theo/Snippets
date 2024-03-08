@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: skyblue;
+      }
+      .box {
+        display: flex;
+      }
+      .left {
+        width: 100px;
+        height: 400px;
+        background-color: #ccc;
+      }
+      .right {
+        flex: 1; /* right side takes up the remaining space */
+        height: 400px;
+        background-color: #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="left">Left</div>
+      <div class="right">Right</div>
+    </div>
+  </body>
+</html>

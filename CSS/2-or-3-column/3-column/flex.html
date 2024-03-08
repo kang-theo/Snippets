@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      .wrap {
+        display: flex;
+        justify-content: space-between;
+      }
+      .left .right,
+      .middle {
+        height: 100px;
+      }
+      .left {
+        width: 200px;
+        background: coral;
+      }
+      .right {
+        width: 120px;
+        background: lightblue;
+      }
+      .middle {
+        background: #555;
+        flex: 1; /* width: 100%; */
+        margin: 0 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="left">Left</div>
+      <div class="middle">Middle</div>
+      <div class="right">Right</div>
+    </div>
+  </body>
+</html>

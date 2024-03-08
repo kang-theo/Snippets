@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* set the font family */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+      }
+      .box {
+        overflow: hidden; /* BFC */
+      }
+      .left {
+        float: left;
+        width: 200px;
+        height: 400px;
+        background-color: gray;
+      }
+      .right {
+        margin-left: 210px; /* bigger than width of Left column*/
+        background-color: lightgray;
+        height: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <div class="left">Left</div>
+      <div class="right">Right</div>
+      <div>Content Below will not move above because of BFC</div>
+    </div>
+  </body>
+</html>
