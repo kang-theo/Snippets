@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style type="text/css">
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 1rem;
+        height: 1rem;
+        background: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">111</div>
+
+    <script type="text/javascript">
+      function flexible() {
+        let doc = document.documentElement;
+        let w = doc.clientWidth / 10; // 元素大小是视窗大小的 1/10
+        doc.style.fontSize = w + "px"; // html 的 font-size 设置为 w px
+      }
+
+      // 页面加载时执行
+      flexible();
+
+      // 页面大小改变时执行
+      window.onresize = function () {
+        flexible();
+      };
+    </script>
+  </body>
+</html>
