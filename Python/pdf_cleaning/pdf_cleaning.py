@@ -10,6 +10,7 @@ import shutil
 
 # import PyPDF2
 import subprocess
+import threading
 
 """common functions"""
 # 按照 page_1, page_2, … page_10, page_11排序
@@ -141,6 +142,26 @@ def compress_pdf(input_path, output_path, compression_level='/screen'):
     
     print(f'Compressed PDF saved to: {output_path}')
 
+def pdf_cleaning(input_pdf, output_images_folder, pdf_output, pdf_compressed_output):
+  # 1. pdf to images
+    create_folder_if_not_exists(output_images_folder)
+    pdf_to_images(input_pdf, output_images_folder)
+
+    # 2. remove part from images
+    region_to_remove = (60, 165, 530, 220)  # 指定要删除的区域的左上角和右下角坐标
+    remove_part_from_even_pages(output_images_folder, region_to_remove)
+
+    # 3. images merged to pdf
+    create_folder_if_not_exists(output_folder)
+    convert_png_to_pdf(output_images_folder, pdf_output)
+
+    # 4. compress
+    print(pdf_compressed_output)
+    compress_pdf(pdf_output, pdf_compressed_output, compression_level='/printer') 
+
+    # 5. clean up
+    delete_folder(output_images_folder)
+
 # # 1. pdf to images
 # input_pdf = 'input.pdf'
 # output_folder = 'output_images'
@@ -166,6 +187,7 @@ output_folder = 'output_pdfs'
 # 获取输入文件夹中的所有 PDF 文件，并按文件名排序
 pdf_files = sorted([file for file in os.listdir(input_folder) if file.lower().endswith('.pdf')])
 
+threads = []
 # 遍历每个 PDF 文件，并对其执行转换、删除指定部分和合并操作
 for pdf_file in pdf_files:
     input_pdf = os.path.join(input_folder, pdf_file)
@@ -173,21 +195,10 @@ for pdf_file in pdf_files:
     pdf_output = os.path.join(output_images_folder, f'{pdf_file}')
     pdf_compressed_output = os.path.join(output_folder, f'{pdf_file}')
 
-    # 1. pdf to images
-    create_folder_if_not_exists(output_images_folder)
-    pdf_to_images(input_pdf, output_images_folder)
+    thread = threading.Thread(target=pdf_cleaning, args=(input_pdf, output_images_folder, pdf_output, pdf_compressed_output))
+    threads.append(thread)
+    thread.start()
 
-    # 2. remove part from images
-    region_to_remove = (60, 165, 530, 220)  # 指定要删除的区域的左上角和右下角坐标
-    remove_part_from_even_pages(output_images_folder, region_to_remove)
-
-    # 3. images merged to pdf
-    create_folder_if_not_exists(output_folder)
-    convert_png_to_pdf(output_images_folder, pdf_output)
-
-    # 4. compress
-    print(pdf_compressed_output)
-    compress_pdf(pdf_output, pdf_compressed_output, compression_level='/printer') 
-
-    # 5. clean up
-    delete_folder(output_images_folder)
+# Wait for all threads to complete
+for thread in threads:
+    thread.join()
