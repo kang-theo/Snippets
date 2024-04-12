@@ -62,6 +62,7 @@ def remove_part_from_even_pages(folder_path, region_to_remove):
         # 打开图像文件
         image = Image.open(file_path)
 
+        # if index % 2 != 0:
         if index % 2 == 0:
             continue
 
@@ -148,7 +149,7 @@ def pdf_cleaning(input_pdf, output_images_folder, pdf_output, pdf_compressed_out
     pdf_to_images(input_pdf, output_images_folder)
 
     # 2. remove part from images
-    region_to_remove = (60, 165, 530, 220)  # 指定要删除的区域的左上角和右下角坐标
+    region_to_remove = (100, 165, 495, 250)  # 指定要删除的区域的左上角和右下角坐标
     remove_part_from_even_pages(output_images_folder, region_to_remove)
 
     # 3. images merged to pdf
